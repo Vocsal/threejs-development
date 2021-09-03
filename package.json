@@ -1,6 +1,10 @@
 {
-  "name": "demo-ts",
-  "version": "0.0.0",
+  "name": "threejs-development",
+  "version": "1.0.0",
+  "description": "Web 3D, ThreeJS Development.",
+  "author": "Vocsal",
+  "license": "MIT",
+  "private": true,
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
