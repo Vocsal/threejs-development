@@ -6,11 +6,12 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "serve": "vite preview"
+    "dev": "vite --config ./build/vite.config.ts",
+    "build": "tsc && vite build --config ./build/vite.config.ts",
+    "serve": "vite preview --config ./build/vite.config.ts"
   },
   "devDependencies": {
+    "@types/node": "^16.7.10",
     "typescript": "^4.3.2",
     "vite": "^2.5.1"
   },
