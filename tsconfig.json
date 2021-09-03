@@ -15,8 +15,9 @@
 
     "baseUrl": ".",
     "paths": {
-        "src": ["src"]
+        "src": ["src"],
+        "files": ["files"],
     }
   },
-  "include": ["./src"]
+  "include": ["./src", "./examples"]
 }
