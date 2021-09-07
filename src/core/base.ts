@@ -84,10 +84,10 @@ export default class Base {
     }
 
     // 创建场景
-    createScene() {
+    createScene(axesHelperSize: number = 100) {
         const scene = new THREE.Scene(); // 场景，一个容器，用于渲染器渲染
         if (this.debug) {
-            scene.add(new THREE.AxesHelper());
+            scene.add(new THREE.AxesHelper(axesHelperSize));
             const stats = Stats();
             this.container!.appendChild(stats.dom);
             this.stats = stats;
