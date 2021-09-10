@@ -1,12 +1,12 @@
+/**
+ * link: https://juejin.cn/post/7002414029176061983
+ */
+
 import * as THREE from "three";
 import Model from "./Model";
 
 interface DragonParameters {
     castShadow?: boolean;
-    wingAmplitude?: number;
-    wingCircle?: number;
-    tailAmplitude?: number;
-    tailCircle?: number;
 }
 
 export default class Dragon extends Model {
@@ -14,26 +14,10 @@ export default class Dragon extends Model {
     material!: Record<string, THREE.Material>;
     components!: Record<string, THREE.Object3D>;
 
-    wingAngle: number = 0;
-    wingAmplitude: number = 0;
-    wingCircle: number = 0;
-
-    tailAngle: number = 0;
-    tailAmplitude: number = 0;
-    tailCircle: number = 0;
-
     constructor({
         castShadow = false,
-        wingAmplitude = 0,
-        wingCircle = 0,
-        tailAmplitude = 0,
-        tailCircle = 0,
     }: DragonParameters = {}) {
         super();
-        this.wingAmplitude = wingAmplitude;
-        this.wingCircle = wingCircle;
-        this.tailAmplitude = tailAmplitude;
-        this.tailCircle = tailCircle;
 
         this.createColorAndMaterial();
         this.add(this.createBody());
@@ -274,46 +258,5 @@ export default class Dragon extends Model {
         this.components = Object.assign({}, this.components, components);
 
         return leg;
-    }
-
-    /**
-     * @param timeInterval 时间间隔，秒
-     */
-    runWings(timeInterval: number = 0): void {
-        const amplitude = this.wingAmplitude;
-        const circle = this.wingCircle;
-        if(timeInterval === 0 || amplitude === 0 || circle === 0) return;
-        this.wingAngle += Math.PI * timeInterval / circle;
-        this.components.wingL.rotation.z = Math.cos(this.wingAngle) * amplitude - Math.PI / 4;
-        this.components.wingR.rotation.z = - Math.cos(this.wingAngle) * amplitude + Math.PI / 4;
-    }
-
-    /**
-     * @param timeInterval 时间间隔，秒
-     */
-    runTail(timeInterval: number = 0): void {
-        const amplitude = this.tailAmplitude;
-        const circle = this.tailCircle;
-        if(timeInterval === 0 || amplitude === 0 || circle === 0) return;
-        this.tailAngle += Math.PI * timeInterval / circle;
-        const tailLineGeometry = (this.components.tailLine as THREE.Mesh).geometry;
-        const tailLineAttribute = tailLineGeometry.getAttribute('position');
-        for( let i = 0; i < tailLineAttribute.count; i++ ) {
-            const x = Math.cos( this.tailAngle / 2 + ( Math.PI / 4 ) * i ) * amplitude * i * i;
-            const y = Math.sin( this.tailAngle - ( Math.PI / 3 ) * i ) * amplitude * i * i;
-            tailLineAttribute.setX(i, x);
-            tailLineAttribute.setY(i, y);
-            if(i === tailLineAttribute.count - 1) {
-                this.components.tailPike.position.x = x;
-                this.components.tailPike.position.y = y;
-                this.components.tailPike.rotation.x = y / 30;
-            }
-        }
-        tailLineAttribute.needsUpdate = true;
-    }
-
-    run(timeInterval: number) {
-        this.runWings(timeInterval);
-        this.runTail(timeInterval);
     }
 }
