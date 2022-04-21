@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
+import { MotionPathPlugin } from 'gsap/src/MotionPathPlugin';
 import gsap from "gsap";
 gsap.registerPlugin(MotionPathPlugin);
 
